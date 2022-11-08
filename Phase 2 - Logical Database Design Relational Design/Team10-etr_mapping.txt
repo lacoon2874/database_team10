@@ -1,0 +1,27 @@
+@Relational diagram 관계 설명
+HOSPITAL - CONTROLS - PATIENT
+- N:M의 관계이므로 새로운 관계 CONTROLS를 생성하여 HOSPITAL - CONTROLS(1:N), CONTROLS - PATIENT(M:1)로 연결하고, HOSPITAL의 primary key Hospital_id와 PATIENT의 primary key SSN을 CONTROLS에서 foreign key로 채용한다.
+
+PATIENT - DEPENDENTS_OF - RECORD
+- 1:N의 관계이므로 1-side인 patient의 primary key SSN을 N-side인 record에서 foreign key로 채용한다.
+
+HOSPITAL - PROVIDE_INFO - RECORD
+- 1:N의 관계이므로 1-side인 hospital의 primary key Hospital_id를 N-side인 record에서 foreign key로 채용한다.
+
+HOSPITAL - HAS - WARD
+- 1:N의 관계이므로 1-side인 hospital의 primary key Hospital_id를 N-side인 ward에서 foreign key로 채용한다.
+
+HOSPITAL - SERVICE - DEPARTMENT
+- 1:N의 관계이므로 1-side인 hospital의 primary key Hospital_id를 N-side인 department에서 foreign key로 채용한다.
+
+DEPARTMENT - WORK - DOCTOR
+- 1:N의 관계이므로 1-side인 department의 primary key Department_code를 N-side인 doctor에서 foreign key로 채용한다.
+
+DOCTOR - IN_CHARGE - WAITING_LIST
+- 1:1의 관계이므로 doctor의 primary key Id_number를 waiting_list에서 foreign key로 채용한다.
+
+@ER diagram 수정사항
+같은 이름의 병원이 존재할 수 있어, hospital에 hospital_id를 추가하고 primary key를 name에서 hospital_id로 변경
+hospital과 record 사이의 관계 provide_info는 하나의 병원에 여러 record가 존재하는 1:N 관계가 적절하여 수정
+department의 진료과목을 나타내는 type은 다른 병원에 같은 진료과목이 존재하므로 unique key에서 제외
+doctor와 waiting_list 사이의 관계 in_charge는 하나의 의사에 대해 하나의 대기 정보가 존재하는 1:1 관계가 적절하여 수정
