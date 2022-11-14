@@ -1,0 +1,74 @@
+-- HOSPITAL
+CREATE TABLE HOSPITAL(
+    Hospital_id VARCHAR(15) NOT NULL,
+    Name VARCHAR(50) NOT NULL,
+    Location VARCHAR(100) NOT NULL,
+    Phone_number VARCHAR(15) NOT NULL,
+    Treatement_subject VARCHAR(50) NOT NULL,
+    Consultation_hours VARCHAR(15),
+    Medical_equipment VARCHAR(80),
+    Check_covid19 VARCHAR(1),
+    PRIMARY KEY(Hospital_id)
+);
+
+-- PATIENT
+CREATE TABLE PATIENT(
+    Id VARCHAR(15) NOT NULL,
+    Fname VARCHAR(15) NOT NULL,
+    Lname VARCHAR(15) NOT NULL,
+    Password VARCHAR(20) NOT NULL,
+    SSN VARCHAR(15) NOT NULL,
+    Sex CHAR,
+    Birth_date VARCHAR(10),
+    Phone_num VARCHAR(15),
+    Address VARCHAR(100),
+    Weight DECIMAL(5,1),
+    Height DECIMAL(5,1),
+    PRIMARY KEY(SSN),
+    UNIQUE(Id)
+);
+
+-- DEPARTMENT
+CREATE TABLE DEPARTMENT(
+    Type VARCHAR(30) NOT NULL,
+    Department_code VARCHAR(18) NOT NULL,
+    Hid VARCHAR(15) NOT NULL,
+    PRIMARY KEY(Department_code)
+);
+ALTER TABLE DEPARTMENT ADD FOREIGN KEY(Hid) REFERENCES HOSPITAL(Hospital_id) ON DELETE CASCADE;
+
+-- RECORD
+CREATE TABLE RECORD(
+    Datetime DATE NOT NULL,
+    History VARCHAR(100) NOT NULL,
+    Disease_entity VARCHAR(30) NOT NULL,
+    Symptom VARCHAR(50),
+    Patient_SSN VARCHAR(15) NOT NULL,
+    Hid VARCHAR(15) NOT NULL,
+    PRIMARY KEY(Datetime,Patient_SSN)
+);
+ALTER TABLE RECORD ADD FOREIGN KEY(Patient_SSN) REFERENCES PATIENT(SSN);
+ALTER TABLE RECORD ADD FOREIGN KEY(Hid) REFERENCES HOSPITAL(Hospital_id);
+
+-- DOCTOR
+CREATE TABLE DOCTOR(
+    Id_number VARCHAR(15) NOT NULL,
+    Fname VARCHAR(15) NOT NULL,
+    Lname VARCHAR(15) NOT NULL,
+    Treatment_subject VARCHAR(30) NOT NULL,
+    Department_code VARCHAR(18) NOT NULL,
+    Schedule VARCHAR(30),
+    Career VARCHAR(100),
+    PRIMARY KEY(Id_number)
+);
+ALTER TABLE DOCTOR ADD FOREIGN KEY(Department_code) REFERENCES DEPARTMENT(Department_code);
+
+-- WAITING_LIST
+CREATE TABLE WAITING_LIST(
+    Time DATE NOT NULL,
+    Num_of_waiting INT NOT NULL,
+    Treatment_state VARCHAR(15),
+    Doctor_id_num VARCHAR(15) NOT NULL,
+    PRIMARY KEY(Time)
+);
+ALTER TABLE WAITING_LIST ADD FOREIGN KEY(Doctor_id_num) REFERENCES DOCTOR(Id_number) ON DELETE CASCADE;
