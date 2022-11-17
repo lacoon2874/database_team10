@@ -1,12 +1,13 @@
-package team10;
+package methane;
 
 import java.sql.*; // import JDBC package
 import java.util.*;
 
 public class Phase3_query {
-	public static final String URL = "jdbc:oracle:thin:@localhost:1521:orcl";
-	public static final String USER_UNIVERSITY ="medical";
-	public static final String USER_PASSWD ="medical10";
+	//ì´ë¶€ë¶„ìœ¼ ë°”ê¿”ì£¼ì„¸ìš”
+	public static final String URL ="jdbc:oracle:thin:@localhost:1600:xe";
+	public static final String USER_UNIVERSITY ="methane";
+	public static final String USER_PASSWD ="1234";
 
 	public static void main(String[] args) {
 		Connection conn=null;	// Connection object
@@ -33,6 +34,7 @@ public class Phase3_query {
 		}
 		
 		
+		doQuery1(conn);
 		doQuery2(conn);
 		
 		// Release database resources.
@@ -44,7 +46,168 @@ public class Phase3_query {
 		
 	}
 	
-	// QUERY - Â¦¼ö
+
+	// QUERY - í™€ìˆ˜ 5ê°œ 
+	public static void doQuery1(Connection conn) {
+		ResultSet rs = null;
+		PreparedStatement ps=null;
+		String sql="";
+		Scanner input=new Scanner(System.in);
+		try {	
+			
+			// 5 - Type 2 (ìˆ˜ì •)
+			System.out.println("\n<< query 5 >>");
+			sql="SELECT * FROM hospital H, department DP "
+					+ "WHERE H.hospital_id=DP.hid "
+					//+ "and DP.department_code=DT.department_code "
+					+ "and H.Name =? ";
+					
+			System.out.print("ë³‘ì›ì„ ì…ë ¥í•˜ì‹œì˜¤ : ");
+			String hospital =input.next();
+			ps=conn.prepareStatement(sql);
+			ps.setString(1,hospital);
+			rs=ps.executeQuery();
+
+			System.out.println("ID\t\t| Name  | Location | phone_number\t\t| Treatement_subject\t\t  | Consultation_hours | Medical_equipment | Check_covid19 | Type | DEPARTMENT_CODE | HID |");
+			System.out.println("------------------------------------------------------------------------------------------------"
+					+ "---------------------------------------------------------");
+			while(rs.next()) {
+				String Id=rs.getString(1);
+				String Name=rs.getString(2);
+				String Location=rs.getString(3);
+				String phone_number=rs.getString(4);
+				String Treatement_subject=rs.getString(5);
+				String Consultation_hours=rs.getString(6);
+				String Medical_equipment=rs.getString(7);
+				String Check_covid19=rs.getString(8);
+				String Type=rs.getString(9);
+				String DEPARTMENT_CODE=rs.getString(10);
+				String HID=rs.getString(11);
+				
+				System.out.printf("%15s | %10s | %20s | %20s | %15s | %20s | %10s | %10s | %10s | %10s | %10s\n",
+						Id,Name,Location,phone_number,Treatement_subject,Consultation_hours, Medical_equipment,Check_covid19,Type,DEPARTMENT_CODE,HID);
+			}
+			
+			
+			
+			// 7 - Type 3 (ìˆ˜ì •)
+						System.out.println("\n<< query 7 >>");
+						sql="SELECT DP.type, count(*) FROM department DP, doctor DT "
+								+ "WHERE DP.department_code=DT.department_code "
+								+" AND DP.type =? "
+								+ "GROUP BY DP.type ";
+								
+						System.out.print("ë¶€ì„œë¥¼ ì…ë ¥í•˜ì‹œì˜¤ : ");
+						String department =input.next();
+						ps=conn.prepareStatement(sql);
+						ps.setString(1,department);
+						rs=ps.executeQuery();
+						
+						System.out.println("| type  | doctor |");
+						System.out.println("--------------------------------------------------");
+						int count =0;
+						while(rs.next()) {
+							department=rs.getString(1);
+							count =rs.getInt(2);
+							
+							System.out.printf("%5s | %5s\n",
+									department,count);
+						}
+						
+						
+						// 13 - Type 7 (ìˆ˜ì •)
+						System.out.println("\n<< query 13 >>");
+						sql="SELECT Fname, Lname, treatment_subject, schedule, num_of_waiting "
+								+ "FROM (SELECT * FROM doctor D, waiting_list W "
+								+ "WHERE D.id_number=W.doctor_id_num)"
+								+ "WHERE treatment_state=?"
+								+ " ORDER BY num_of_waiting ASC";
+								
+						System.out.print("ì˜ì‚¬ ì§„ë£Œì •ë³´ ìƒíƒœë¥¼ ì…ë ¥í•˜ì‹œì˜¤ : ");
+						String D_state_ =input.next();
+						ps=conn.prepareStatement(sql);
+						ps.setString(1,D_state_);
+						rs=ps.executeQuery();
+
+						System.out.println("Fname\t\t| Lname  | treatment_subject | schedule\t\t| num_of_waiting\t\t  ");
+						System.out.println("------------------------------------------------------------------------------------------------");
+					
+						while(rs.next()) {
+							String Fname=rs.getString(1);
+							String Lname=rs.getString(2);
+							String treatment_subject=rs.getString(3);
+							String schedule=rs.getString(4);
+							int num_of_waiting=rs.getInt(5);
+							
+							
+							System.out.printf("%10s | %10s | %15s | %15s | %10s \n",
+									Fname,Lname,treatment_subject,schedule,num_of_waiting);
+						}
+						
+						// 17 - Type 9 (ìˆ˜ì •)
+						System.out.println("\n<< query 17 >>");
+						sql="SELECT P.ssn, count(*) FROM patient P, record R "
+								+ "WHERE P.ssn=R.patient_ssn "
+								+ "AND P.ssn =? "
+								+ "GROUP BY P.ssn ";
+								
+								
+						System.out.print("ì£¼ë¯¼ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì‹œì˜¤(******-*******) : ");
+						String ssn =input.next();
+						ps=conn.prepareStatement(sql);
+						ps.setString(1,ssn);
+						rs=ps.executeQuery();
+						
+						System.out.println("| ssn       | record ìˆ˜  |");
+						System.out.println("--------------------------------------------------");
+						int r_count =0;
+						while(rs.next()) {
+							department=rs.getString(1);
+							r_count =rs.getInt(2);
+							
+							System.out.printf("%5s | %5s\n",
+									department,r_count);
+						}
+			
+						// 19 - Type 10 (ìˆ˜ì •)
+						System.out.println("\n<< query 19 >>");
+						sql="(SELECT H.name FROM hospital H, controls C, patient P"
+								+ " WHERE H.hospital_id=C.hid and C.patient_ssn=P.ssn "
+								+ "GROUP BY H.name HAVING count(*)>=6)"
+								+ "INTERSECT"
+								+ "(SELECT H.name Hname FROM hospital H, department D "
+								+ "WHERE H.hospital_id=D.hid and D.type=?)";
+								
+								
+								
+						System.out.print("ë¶€ì„œë¥¼ ì…ë ¥í•˜ì‹œì˜¤ : ");
+						department =input.next();
+						ps=conn.prepareStatement(sql);
+						ps.setString(1,department);
+						rs=ps.executeQuery();
+						
+						System.out.println("| Hospital Name  |");
+						System.out.println("----------------------------");
+						
+						while(rs.next()) {
+							String H_Name=rs.getString(1);
+							
+							
+							System.out.printf("%10s\n",
+									 H_Name);
+						}
+			ps.close();
+			rs.close();
+			input.close();
+		}catch(SQLException ex2) {
+			System.err.println("sql error = " + ex2.getMessage());
+			System.exit(1);
+		}
+	}
+	
+
+	
+	// QUERY - ì§ìˆ˜ 5ê°œ 
 	public static void doQuery2(Connection conn) {
 		ResultSet rs = null;
 		PreparedStatement ps=null;
@@ -55,7 +218,7 @@ public class Phase3_query {
 			System.out.println("\n<< query 2 >>");
 			sql="SELECT * FROM PATIENT WHERE Sex=?";
 			// user input (console)
-			System.out.print("¼ºº°À» ÀÔ·ÂÇÏ½Ã¿À(M/F) : ");
+			System.out.print("ì„±ë³„ì„ ì…ë ¥í•˜ì‹œì˜¤(M/F) : ");
 			String sex=input.next();
 			ps=conn.prepareStatement(sql);
 			ps.setString(1,sex);
@@ -80,13 +243,13 @@ public class Phase3_query {
 						Id,Fname,Lname,PW,Ssn,sex, Bdate,Phone_num,Address,weight,height);
 			}
 			
-			// 10 - Type5 (¼öÁ¤)
-			// ·¹ÄÚµå°¡ ¾ø´Â È¯ÀÚ Áß »ıÀÏÀÌ ?¿ùÀÎ È¯ÀÚÀÇ Á¤º¸
+			// 10 - Type5 (ìˆ˜ì •)
+			// ë ˆì½”ë“œê°€ ì—†ëŠ” í™˜ì ì¤‘ ìƒì¼ì´ ?ì›”ì¸ í™˜ìì˜ ì •ë³´
 			System.out.println("\n<< query 10 >>");
 			sql="SELECT * FROM PATIENT P "
 					+ "WHERE NOT EXISTS (SELECT 1 FROM RECORD R WHERE P.Ssn=R.Patient_ssn) "
 					+ "AND TO_NUMBER(SUBSTR(BIRTH_DATE,3,2))=?";
-			System.out.print("»ıÀÏÀ» ¿ùÀ» ÀÔ·ÂÇÏ½Ã¿À : ");
+			System.out.print("ìƒì¼ì„ ì›”ì„ ì…ë ¥í•˜ì‹œì˜¤ : ");
 			int month=input.nextInt();
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, month);
@@ -111,12 +274,12 @@ public class Phase3_query {
 			}
 			
 			
-			// 12 - Type6 (¼öÁ¤)
-			// ÇöÀç ´ë±â ÀÎ¿øÀÌ ?¸íÀÌÇÏÀÎ ÀÇ»çµéÀÇ Á¤º¸ 
+			// 12 - Type6 (ìˆ˜ì •)
+			// í˜„ì¬ ëŒ€ê¸° ì¸ì›ì´ ?ëª…ì´í•˜ì¸ ì˜ì‚¬ë“¤ì˜ ì •ë³´ 
 			System.out.println("\n<< query 12 >>");
 			sql="SELECT id_number, Lname, Fname, Treatment_subject FROM DOCTOR WHERE Id_number IN "
 					+ "(SELECT doctor_id_num FROM WAITING_LIST WHERE num_of_waiting<= ?)";
-			System.out.print("´ë±âÀÎ¿øÀ» ÀÔ·ÂÇÏ½Ã¿À : ");
+			System.out.print("ëŒ€ê¸°ì¸ì›ì„ ì…ë ¥í•˜ì‹œì˜¤ : ");
 			int waiting=input.nextInt();
 			input.nextLine();
 			ps=conn.prepareStatement(sql);
@@ -132,13 +295,13 @@ public class Phase3_query {
 				System.out.println(id_number+" |   "+Lname+"   |  "+Fname+"  | "+treatment);
 			}
 			
-			// 18 - Type 9 (¼öÁ¤)
-			// Áø·á°ú¸ñ¿¡ ?°¡ Æ÷ÇÔµÇ¾îÀÖ´Â º´¿øÀÇ ÃÑ ºóÄ§´ë¼ö¸¦ ¼ö°¡ ¸¹Àº ¼ø¼­´ë·Î Ãâ·Â
+			// 18 - Type 9 (ìˆ˜ì •)
+			// ì§„ë£Œê³¼ëª©ì— ?ê°€ í¬í•¨ë˜ì–´ìˆëŠ” ë³‘ì›ì˜ ì´ ë¹ˆì¹¨ëŒ€ìˆ˜ë¥¼ ìˆ˜ê°€ ë§ì€ ìˆœì„œëŒ€ë¡œ ì¶œë ¥
 			System.out.println("\n<< query 18 >>");
 			sql="SELECT H.name, SUM(W.num_of_empty_bed) FROM HOSPITAL H, WARD W "
 					+ "WHERE H.hospital_id=W.hid AND H.treatement_subject LIKE ? "
 					+ "GROUP BY H.name ORDER BY SUM(W.num_of_empty_bed) DESC";
-			System.out.print("Áø·á°ú¸ñ¸íÀ» ÀÔ·ÂÇÏ½Ã¿À : ");
+			System.out.print("ì§„ë£Œê³¼ëª©ëª…ì„ ì…ë ¥í•˜ì‹œì˜¤ : ");
 			String subject=input.nextLine();
 			subject='%'+subject+'%';
 			ps=conn.prepareStatement(sql);
@@ -153,14 +316,14 @@ public class Phase3_query {
 			}
 			
 			// 20 - Type 10
-			// ³»°ú¸¦ Áø·áÇÏ´Â º´¿ø Áß ?±¸¿¡ À§Ä¡ÇÑ º´¿ø
+			// ë‚´ê³¼ë¥¼ ì§„ë£Œí•˜ëŠ” ë³‘ì› ì¤‘ ?êµ¬ì— ìœ„ì¹˜í•œ ë³‘ì›
 			System.out.println("\n<< query 20 >>");
 			sql="(SELECT H.name FROM HOSPITAL H WHERE H.location LIKE ?) INTERSECT"
 					+ "(SELECT H.name  FROM HOSPITAL H, DEPARTMENT D WHERE H.hospital_id=D.hid AND D.type=?)";
-			System.out.print("ÁÖ¼Ò¸¦ ÀÔ·ÂÇÏ½Ã¿À : ");
+			System.out.print("ì£¼ì†Œë¥¼ ì…ë ¥í•˜ì‹œì˜¤ : ");
 			String ad=input.nextLine();
 			ad='%'+ad+'%';
-			System.out.print("º´¿øºÎ¼­¸íÀ» ÀÔ·ÂÇÏ½Ã¿À : ");
+			System.out.print("ë³‘ì›ë¶€ì„œëª…ì„ ì…ë ¥í•˜ì‹œì˜¤ : ");
 			String type=input.nextLine();
 			ps=conn.prepareStatement(sql);
 			ps.setString(1,ad);
@@ -182,5 +345,7 @@ public class Phase3_query {
 			System.exit(1);
 		}
 	}
+	
+	
 
 }
