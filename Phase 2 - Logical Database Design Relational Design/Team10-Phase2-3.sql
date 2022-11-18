@@ -1,67 +1,67 @@
--- 1. Type1 - ì„±ì´ 'ê¹€'ì”¨ì¸ í™˜ìì˜ ì •ë³´
-SELECT * FROM patient WHERE Lname='ê¹€';
+-- 1. Type1 - ¼ºÀÌ '±è'¾¾ÀÎ È¯ÀÚÀÇ Á¤º¸
+SELECT * FROM patient WHERE Lname='±è';
 
--- 2. Type1 -  ì„±ë³„ì´ ë‚¨ìì¸ í™˜ì ì •ë³´
+-- 2. Type1 -  ¼ºº°ÀÌ ³²ÀÚÀÎ È¯ÀÚ Á¤º¸
 SELECT * FROM patient WHERE Sex='M';
 
--- 3. Type1 -  ê°€ê²©ì´ 20ë§Œì› ì´ìƒì¸ ì…ì›ì‹¤ ì •ë³´
+-- 3. Type1 -  °¡°İÀÌ 20¸¸¿ø ÀÌ»óÀÎ ÀÔ¿ø½Ç Á¤º¸
 SELECT * FROM ward WHERE price>=200000;
 
--- 4. Type2 - ì¹˜ë£Œ ê¸°ë¡ì´ ìˆëŠ” í™˜ì list ì¶œë ¥ (ë³‘ì›+í™˜ì+record = ë³‘ì›ì— ë“±ë¡ë˜ì–´ìˆê³  ì§„ë£Œê¸°ë¡ê¹Œì§€ ìˆëŠ” í™˜ìì— ëŒ€í•´ list ì¶œë ¥)
+-- 4. Type2 - Ä¡·á ±â·ÏÀÌ ÀÖ´Â È¯ÀÚ list Ãâ·Â (º´¿ø+È¯ÀÚ+record = º´¿ø¿¡ µî·ÏµÇ¾îÀÖ°í Áø·á±â·Ï±îÁö ÀÖ´Â È¯ÀÚ¿¡ ´ëÇØ list Ãâ·Â)
 SELECT distinct P.* FROM hospital H, controls C, patient P, record R WHERE H.hospital_id=C.hid and C.patient_ssn=P.ssn and P.ssn=R.patient_ssn and H.hospital_id=R.hid;
 
--- 5. Type2 - ë³‘ì› ë³„ ë¶€ì„œ ë° ì˜ì‚¬ ì •ë³´
-SELECT * FROM hospital H, department DP, doctor DT WHERE H.hospital_id=DP.hid and DP.department_code=DT.department_code;
+-- 5. Type2 - º´¿ø º° ºÎ¼­ ¹× ÀÇ»ç Á¤º¸ - ¼öÁ¤
+SELECT * FROM hospital H, department DP, doctor DT WHERE H.hospital_id=DP.hid and DP.department_code=DT.department_code AND DP.Hid=DT.Hid;
 
--- 6. Type3 - ë³‘ì›ë³„ ë“±ë¡ë˜ì–´ ìˆëŠ” í™˜ììˆ˜
+-- 6. Type3 - º´¿øº° µî·ÏµÇ¾î ÀÖ´Â È¯ÀÚ¼ö
 SELECT H.name, count(*) FROM hospital H, controls C, patient P WHERE H.hospital_id=C.hid and C.patient_ssn=P.ssn GROUP BY H.name;
 
--- 7. Type3 - ë¶€ì„œë³„(ë¶€ì„œ ì´ë¦„ ê¸°ì¤€) ì˜ì‚¬ìˆ˜
-SELECT DP.type, count(*) FROM department DP, doctor DT WHERE DP.department_code=DT.department_code GROUP BY DP.type;
+-- 7. Type3 - ºÎ¼­º°(ºÎ¼­ ÀÌ¸§ ±âÁØ) ÀÇ»ç¼ö - ¼öÁ¤
+SELECT DP.type, count(*) FROM department DP, doctor DT WHERE DP.department_code=DT.department_code AND DP.Hid=DT.Hid GROUP BY DP.type;
 
--- 8. Type4 - ã…‡ã…‡ì˜ì‚¬(id_numberë¡œ ê²€ìƒ‰)ì™€ ë™ì¼í•œ ê²½ë ¥(ê°™ì€í•™êµì¡¸ì—…)í•œ ì˜ì‚¬ë“¤ ì •ë³´
+-- 8. Type4 - ¤·¤·ÀÇ»ç(id_number·Î °Ë»ö)¿Í µ¿ÀÏÇÑ °æ·Â(°°ÀºÇĞ±³Á¹¾÷)ÇÑ ÀÇ»çµé Á¤º¸
 SELECT * FROM doctor WHERE career=(SELECT career FROM doctor WHERE id_number='123456789');
 
--- 9. Type4 - ã…‡ã…‡ì˜ì‚¬(id_numberë¡œ ê²€ìƒ‰)ì™€ ë™ì¼í•œ ìŠ¤ì¼€ì¤„ì„ ê°€ì§„ ì˜ì‚¬ë“¤ ì •ë³´
+-- 9. Type4 - ¤·¤·ÀÇ»ç(id_number·Î °Ë»ö)¿Í µ¿ÀÏÇÑ ½ºÄÉÁÙÀ» °¡Áø ÀÇ»çµé Á¤º¸
 SELECT * FROM doctor WHERE schedule=(SELECT schedule FROM doctor WHERE id_number='123456789');
 
--- 10. Type5 - ë ˆì½”ë“œê°€ ì—†ëŠ” í™˜ìì˜ ì •ë³´
+-- 10. Type5 - ·¹ÄÚµå°¡ ¾ø´Â È¯ÀÚÀÇ Á¤º¸
 SELECT * FROM patient P WHERE NOT EXISTS(SELECT 1 FROM record R WHERE P.ssn=R.patient_ssn);
 
--- 11. Type5 - ì™¸ê³¼ë¥¼ ê°€ì§€ê³  ìˆëŠ” ë³‘ì›ì •ë³´
-SELECT * FROM hospital H WHERE EXISTS(SELECT 1 FROM department D WHERE H.hospital_id=D.hid and D.type='ì™¸ê³¼');
+-- 11. Type5 - ¿Ü°ú¸¦ °¡Áö°í ÀÖ´Â º´¿øÁ¤º¸
+SELECT * FROM hospital H WHERE EXISTS(SELECT 1 FROM department D WHERE H.hospital_id=D.hid and D.type='¿Ü°ú');
 
--- 12. Type6 - í˜„ì¬ ëŒ€ê¸° ì¸ì›ì´ ì—†ëŠ” ì˜ì‚¬ë“¤ì˜ ì •ë³´
+-- 12. Type6 - ÇöÀç ´ë±â ÀÎ¿øÀÌ ¾ø´Â ÀÇ»çµéÀÇ Á¤º¸
 SELECT * FROM doctor WHERE id_number IN(SELECT doctor_id_num from waiting_list where num_of_waiting<=0);
 
--- 13. Type7 - í˜„ì¬ ì§„ë£Œì¤‘ì¸ ì˜ì‚¬ ì •ë³´ë¥¼ ëŒ€ê¸° ì¸ì›ì´ ì ì€ ìˆœìœ¼ë¡œ ì¶œë ¥
+-- 13. Type7 - ÇöÀç Áø·áÁßÀÎ ÀÇ»ç Á¤º¸¸¦ ´ë±â ÀÎ¿øÀÌ ÀûÀº ¼øÀ¸·Î Ãâ·Â
 SELECT Fname, Lname, treatment_subject, schedule, num_of_waiting FROM
 (SELECT * FROM doctor D, waiting_list W WHERE D.id_number=W.doctor_id_num)
-WHERE treatment_state='ì§„ë£Œì¤‘' ORDER BY num_of_waiting ASC;
+WHERE treatment_state='Áø·áÁß' ORDER BY num_of_waiting ASC;
 
--- 14. Type7 - ì •í˜•ì™¸ê³¼ì—ì„œ ì¼í•˜ëŠ” ì˜ì‚¬ì˜ ì´ë¦„ê³¼ ìŠ¤ì¼€ì¤„ ì¶œë ¥
+-- 14. Type7 - Á¤Çü¿Ü°ú¿¡¼­ ÀÏÇÏ´Â ÀÇ»çÀÇ ÀÌ¸§°ú ½ºÄÉÁÙ Ãâ·Â - (¼öÁ¤)
 SELECT * FROM
-(SELECT DP.type, DT.Lname, DT.Fname, DT.schedule FROM department DP, doctor DT WHERE DP.department_code=DT.department_code)
-WHERE type='ì •í˜•ì™¸ê³¼';
+(SELECT DP.type, DT.Lname, DT.Fname, DT.schedule FROM department DP, doctor DT WHERE DP.department_code=DT.department_code and DP.Hid=DT.Hid)
+WHERE type='Á¤Çü¿Ü°ú';
 
--- 15. Type8 - ì…ì›ì‹¤ ê°€ê²©ì´ ì ì€ ìˆœìœ¼ë¡œ ë³‘ì›+ì…ì›ì‹¤ ì •ë³´ ì¶œë ¥
+-- 15. Type8 - ÀÔ¿ø½Ç °¡°İÀÌ ÀûÀº ¼øÀ¸·Î º´¿ø+ÀÔ¿ø½Ç Á¤º¸ Ãâ·Â
 SELECT * FROM hospital H, ward W WHERE H.hospital_id=W.hid ORDER BY W.price ASC;
 
--- 16. Type8 - ëŒ€ê¸° ì¸ì›ì´ ì ì€ ìˆœì„œëŒ€ë¡œ ì˜ì‚¬+ëŒ€ê¸°ì—´ ì •ë³´ ì¶œë ¥
+-- 16. Type8 - ´ë±â ÀÎ¿øÀÌ ÀûÀº ¼ø¼­´ë·Î ÀÇ»ç+´ë±â¿­ Á¤º¸ Ãâ·Â
 SELECT * FROM doctor D, waiting_list W WHERE D.id_number=W.doctor_id_num ORDER BY num_of_waiting ASC;
 
--- 17. Type9 - recordê°€ ë§ì€ ìˆœì„œëŒ€ë¡œ ì¶œë ¥, recordê°€ ì—†ìœ¼ë©´ ì¶œë ¥í•˜ì§€ ì•ŠìŒ
+-- 17. Type9 - record°¡ ¸¹Àº ¼ø¼­´ë·Î Ãâ·Â, record°¡ ¾øÀ¸¸é Ãâ·ÂÇÏÁö ¾ÊÀ½
 SELECT P.ssn, count(*) FROM patient P, record R WHERE P.ssn=R.patient_ssn GROUP BY P.ssn ORDER BY count(*) DESC;
 
--- 18. Type9 - ë¹ˆ ì¹¨ëŒ€ ìˆ˜ê°€ ë§ì€ ìˆœì„œëŒ€ë¡œ ì¶œë ¥
-SELECT H.name, max(W.num_of_empty_bed) FROM hospital H, ward W WHERE H.hospital_id=W.hid GROUP BY H.name ORDER BY max(W.num_of_empty_bed) DESC;
+-- 18. Type9 - ºó Ä§´ë ¼ö°¡ ¸¹Àº ¼ø¼­´ë·Î Ãâ·Â
+SELECT H.name, SUM(W.num_of_empty_bed) FROM hospital H, ward W WHERE H.hospital_id=W.hid GROUP BY H.name ORDER BY SUM(W.num_of_empty_bed) DESC;
 
--- 19. Type10 - ë‚´ê³¼ë¥¼ ì§„ë£Œí•˜ëŠ” ë³‘ì› ì¤‘ í™˜ì ìˆ˜ê°€ 6ëª… ì´ìƒì¸ ë³‘ì› ì´ë¦„
+-- 19. Type10 - ³»°ú¸¦ Áø·áÇÏ´Â º´¿ø Áß È¯ÀÚ ¼ö°¡ 6¸í ÀÌ»óÀÎ º´¿ø ÀÌ¸§
 (SELECT H.name FROM hospital H, controls C, patient P WHERE H.hospital_id=C.hid and C.patient_ssn=P.ssn GROUP BY H.name HAVING count(*)>=6)
 INTERSECT
-(SELECT H.name Hname FROM hospital H, department D WHERE H.hospital_id=D.hid and D.type='ë‚´ê³¼');
+(SELECT H.name Hname FROM hospital H, department D WHERE H.hospital_id=D.hid and D.type='³»°ú');
 
--- 20. Type10 - ë‚´ê³¼ë¥¼ ì§„ë£Œí•˜ëŠ” ë³‘ì› ì¤‘ ë‹¬ì„œêµ¬ì— ìœ„ì¹˜í•œ ë³‘ì›
-(SELECT H.name FROM hospital H WHERE H.location LIKE '%ë‹¬ì„œêµ¬%')
+-- 20. Type10 - ³»°ú¸¦ Áø·áÇÏ´Â º´¿ø Áß ´Ş¼­±¸¿¡ À§Ä¡ÇÑ º´¿ø
+(SELECT H.name FROM hospital H WHERE H.location LIKE '%´Ş¼­±¸%')
 INTERSECT
-(SELECT H.name FROM hospital H, department D WHERE H.hospital_id=D.hid and D.type='ë‚´ê³¼');
+(SELECT H.name FROM hospital H, department D WHERE H.hospital_id=D.hid and D.type='³»°ú');
