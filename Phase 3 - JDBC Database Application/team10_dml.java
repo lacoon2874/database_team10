@@ -33,28 +33,169 @@ public class team10_dml {
 			System.exit(1);
 		}
 		
-		/*
-		 * function
-		 */
-		
-		//addPatient(conn, sc, "abcd1234");
-		//addRecord(conn, sc, "abcd1234", "951212-1234567");
-		//addWard(conn, sc, "abcd1234");
-		//addDepartment(conn, sc, "abcd1234");
-		//addDoctor(conn, sc, "abcd1234_01");
-		
-		//removePatient(conn, sc, "abcd1234");
-		//removeWard(conn, sc, "abcd1234");
-		//removeDepartment(conn, sc, "abcd1234");
-		//removeDoctor(conn, sc, "abcd1234_01", "");
-
-		//changePatientPassword(conn, sc, "123456-1234567");
-		//changePatientPhoneNum(conn, sc, "123456-1234567");
-		//changePatientAddress(conn, sc, "123456-1234567");
-		//changeWardPrice(conn, sc, "abcd1234", "2022-11-11 11:11:11");
-		//changeWardEmptyBedNum(conn, sc, "abcd1234", "2022-11-11 11:11:11");
-		//changeDoctorSchedule(conn, sc, "123123456");
-		//changeWaitingListNum(conn, sc, "123123456", "2022-11-11 11:11:11");
+		int menu;
+		while(true) {
+			System.out.println("1: 데이터 추가, 2: 데이터 삭제, 3: 데이터 변경, 4: 데이터 조회, 0: 종료");
+			System.out.print("메뉴를 선택해 주세요 : ");
+			menu = sc.nextInt();
+			sc.nextLine();
+			if(menu == 0) {
+				break;
+			}
+			
+			int subMenu;
+			switch(menu) {
+			case 1:
+				System.out.println("데이터 추가 - 1: 환자, 2: 진료기록, 3: 병실, 4: 부서, 5: 의사 및 대기인원");
+				System.out.print("추가할 데이터를 선택해주세요 : ");
+				subMenu = sc.nextInt();
+				sc.nextLine();
+				switch(subMenu) {
+				case 1:
+					System.out.print("환자를 추가할 병원 id : ");
+					String hospital_id1 = sc.nextLine();
+					addPatient(conn, sc, hospital_id1);
+					break;
+				case 2:
+					System.out.print("기록을 추가할 병원 id : ");
+					String hospital_id2 = sc.nextLine();
+					System.out.print("기록을 추가할 환자 ssn : ");
+					String patient_ssn2 = sc.nextLine();
+					addRecord(conn, sc, hospital_id2, patient_ssn2);
+					break;
+				case 3:
+					System.out.print("병실을 추가할 병원 id : ");
+					String hospital_id3 = sc.nextLine();
+					addWard(conn, sc, hospital_id3);
+					break;
+				case 4:
+					System.out.print("부서를 추가할 병원 id : ");
+					String hospital_id4 = sc.nextLine();
+					addDepartment(conn, sc, hospital_id4);
+					break;
+				case 5:
+					System.out.print("의사 및 대기인원을 추가할 병원 id : ");
+					String hospital_id5 = sc.nextLine();
+					System.out.print("의사 및 대기인원을 추가할 부서 code : ");
+					String department_code5 = sc.nextLine();
+					addDoctor(conn, sc, hospital_id5, department_code5);
+					break;
+				default:
+					System.out.println("잘못된 입력입니다.");
+					break;
+				}
+				break;
+			case 2:
+				System.out.println("데이터 삭제 - 1: 환자, 2: 병실, 3: 부서, 4: 의사 및 대기인원");
+				System.out.print("삭제할 데이터를 선택해주세요 : ");
+				subMenu = sc.nextInt();
+				sc.nextLine();
+				switch(subMenu) {
+				case 1:
+					System.out.print("환자를 삭제할 병원 id : ");
+					String hospital_id1 = sc.nextLine();
+					removePatient(conn, sc, hospital_id1);
+					break;
+				case 2:
+					System.out.print("병실을 삭제할 병원 id : ");
+					String hospital_id2 = sc.nextLine();
+					removeWard(conn, sc, hospital_id2);
+					break;
+				case 3:
+					System.out.print("부서를 삭제할 병원 id : ");
+					String hospital_id3 = sc.nextLine();
+					removeDepartment(conn, sc, hospital_id3);
+					break;
+				case 4:
+					System.out.print("의사 및 대기인원을 삭제할 병원 id : ");
+					String hospital_id4 = sc.nextLine();
+					System.out.print("의사 및 대기인원을 삭제할 부서 code : ");
+					String department_code4 = sc.nextLine();
+					removeDoctor(conn, sc, hospital_id4, department_code4, "");
+					break;
+				default:
+					System.out.println("잘못된 입력입니다.");
+					break;
+				}
+				break;
+			case 3:
+				System.out.println("데이터 변경 - 1: 비밀번호, 2: 전화번호, 3: 주소(환자), 4: 병실 가격, 5: 남은 병실 수, 6: 의사 스케줄, 7: 대기 인원 수");
+				System.out.print("변경할 데이터를 선택해주세요 : ");
+				subMenu = sc.nextInt();
+				sc.nextLine();
+				switch(subMenu) {
+				case 1:
+					System.out.print("비밀번호를 변경할 환자 ssn : ");
+					String patient_ssn1 = sc.nextLine();
+					changePatientPassword(conn, sc, patient_ssn1);
+					break;
+				case 2:
+					System.out.print("전화번호를 변경할 환자 ssn : ");
+					String patient_ssn2 = sc.nextLine();
+					changePatientPhoneNum(conn, sc, patient_ssn2);
+					break;
+				case 3:
+					System.out.print("주소를 변경할 환자 ssn : ");
+					String patient_ssn3 = sc.nextLine();
+					changePatientAddress(conn, sc, patient_ssn3);
+					break;
+				case 4:
+					System.out.print("병실가격을 변경할 병원 id : ");
+					String hospital_id4 = sc.nextLine();
+					System.out.print("가격을 변경할 병실 time : ");
+					String ward_time4 = sc.nextLine();
+					changeWardPrice(conn, sc, hospital_id4, ward_time4);
+					break;
+				case 5:
+					System.out.print("남은 병실 수를 변경할 병원 id : ");
+					String hospital_id5 = sc.nextLine();
+					System.out.print("남은 수를 변경할 병실 time : ");
+					String ward_time5 = sc.nextLine();
+					changeWardEmptyBedNum(conn, sc, hospital_id5, ward_time5);
+					break;
+				case 6:
+					System.out.print("스케줄을 변경할 의사 id : ");
+					String doctor_id6 = sc.nextLine();
+					changeDoctorSchedule(conn, sc, doctor_id6);
+					break;
+				case 7:
+					System.out.print("대기인원 수를 변경할 의사 id : ");
+					String doctor_id7 = sc.nextLine();
+					changeWaitingListNum(conn, sc, doctor_id7);
+					break;
+				default:
+					System.out.println("잘못된 입력입니다.");
+					break;
+				}
+				break;
+			case 4:
+				System.out.println("데이터 조회 - 1: 병원 목록, 2: 병원 정보, 3: 병실 정보, 4: 의사 정보, 5: 환자 정보");
+				System.out.print("조회할 데이터를 선택해주세요 : ");
+				subMenu = sc.nextInt();
+				sc.nextLine();
+				switch(subMenu) {
+				case 1:
+					getHospitalList(conn, sc);
+					break;
+				case 2:
+					getHospitalInformation(conn, sc);
+					break;
+				case 3:
+					getWard(conn, sc);
+					break;
+				case 4:
+					getDoctorInformation(conn, sc);
+					break;
+				case 5:
+					getPatientInformation(conn, sc);
+					break;
+				default:
+					System.out.println("잘못된 입력입니다.");
+					break;
+				}
+				break;
+			}
+		}
 		
 		try {
 			// Close the Statement object.
@@ -330,7 +471,7 @@ public class team10_dml {
 		}
 	}
 	
-	public static void addDoctor(Connection conn, Scanner sc, String department_code) {
+	public static void addDoctor(Connection conn, Scanner sc, String hospital_id, String department_code) {
 		try {
 			String doctor_id_num = "";
 			
@@ -357,7 +498,10 @@ public class team10_dml {
 				String colName = rsmd.getColumnName(index);
 				String colType = rsmd.getColumnTypeName(index);
 				String input = "";
-				if(colName.equals("DEPARTMENT_CODE")) {
+				if(colName.equals("HID")) {
+					input = hospital_id;
+				}
+				else if(colName.equals("DEPARTMENT_CODE")) {
 					input = department_code;
 				}
 				else {
@@ -499,22 +643,24 @@ public class team10_dml {
 	
 	public static void removeDepartment(Connection conn, Scanner sc, String hospital_id) {
 		try {
-			String sql = "SELECT id_number FROM doctor WHERE department_code=?";
+			String sql = "SELECT id_number FROM doctor WHERE hid=? and department_code=?";
 			System.out.print("삭제할 부서 코드 : ");
 			String department_code = sc.nextLine();
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, department_code);
+			pstmt.setString(1, hospital_id);
+			pstmt.setString(2, department_code);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
 				String id_number = rs.getString(1);
-				removeDoctor(conn, sc, department_code, id_number);
+				removeDoctor(conn, sc, hospital_id, department_code, id_number);
 			}
 			rs.close();
 			pstmt.close();
 			
-			sql = "DELETE FROM department WHERE department_code=?";
+			sql = "DELETE FROM department WHERE hid=? and department_code=?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, department_code);
+			pstmt.setString(1, hospital_id);
+			pstmt.setString(2, department_code);
 			int res = pstmt.executeUpdate();
 			System.out.println(res + " row deleted.");
 			conn.commit();
@@ -527,7 +673,7 @@ public class team10_dml {
 		}
 	}
 	
-	public static void removeDoctor(Connection conn, Scanner sc, String department_code, String id_number) {
+	public static void removeDoctor(Connection conn, Scanner sc, String hospital_id, String department_code, String id_number) {
 		try {
 			if(id_number.equals("")) {
 				System.out.print("삭제할 의사 ID_NUMBER : ");
@@ -536,10 +682,11 @@ public class team10_dml {
 
 			removeWaitingList(conn, sc, id_number);
 
-			String sql = "DELETE FROM doctor WHERE department_code=? and id_number=?";
+			String sql = "DELETE FROM doctor WHERE hid=? and department_code=? and id_number=?";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, department_code);
-			pstmt.setString(2, id_number);
+			pstmt.setString(1, hospital_id);
+			pstmt.setString(2, department_code);
+			pstmt.setString(3, id_number);
 			int res = pstmt.executeUpdate();
 			System.out.println(res + " row deleted.");
 			conn.commit();
@@ -691,15 +838,14 @@ public class team10_dml {
 		}
 	}
 	
-	public static void changeWaitingListNum(Connection conn, Scanner sc, String doctor_id, String time) {
+	public static void changeWaitingListNum(Connection conn, Scanner sc, String doctor_id) {
 		try {
-			String sql = "UPDATE waiting_list SET num_of_waiting=? WHERE doctor_id_num=? and time=?";
+			String sql = "UPDATE waiting_list SET num_of_waiting=? WHERE doctor_id_num=?";
 			System.out.print("대기 인원 수 입력 : ");
 			String newWaitingNum = sc.nextLine();
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, newWaitingNum);
 			pstmt.setString(2, doctor_id);
-			pstmt.setTimestamp(3, java.sql.Timestamp.valueOf(time));
 			int res = pstmt.executeUpdate();
 			System.out.println(res + " row updated.");
 			conn.commit();
@@ -710,5 +856,108 @@ public class team10_dml {
 			System.err.println("sql error = " + ex2.getMessage());
 			System.exit(1);
 		}
+	}
+	
+	public static void selectFunction(Connection conn, Scanner sc, String data, String table_name, String condition, String[] param, Boolean[] paramValid) {
+		try {
+			String sql = "SELECT " + data + " FROM " + table_name + " " + condition;
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			PreparedStatement pstmt2 = conn.prepareStatement(sql);
+			ParameterMetaData pmd = pstmt.getParameterMetaData();
+			int paramSize = pmd.getParameterCount();
+			System.out.println("sql parameter 입력 - " + sql);
+			for(int index = 1; index <= paramSize; index++) {
+				System.out.print(param[index-1] + " : ");
+				String input = sc.nextLine();
+
+				if(!paramValid[index-1]) {
+					pstmt2.setString(index, input);
+				}
+				else {
+					String colType = pmd.getParameterTypeName(index);
+					
+					if(input.equals("NULL")) {
+						pstmt2.setNull(index, java.sql.Types.NULL);
+					}
+					else {
+						if(colType.equals("DATE")) {
+							pstmt2.setTimestamp(index, java.sql.Timestamp.valueOf(input));
+						}
+						else if(colType.equals("NUMBER")) {
+							pstmt2.setBigDecimal(index, new BigDecimal(input));
+						}
+						else {
+							pstmt2.setString(index, input);
+						}
+					}
+				}
+			}
+			
+			pstmt.close();
+			
+			pstmt = conn.prepareStatement(sql);
+			ResultSetMetaData rsmd = pstmt.getMetaData();
+			ResultSet rs = pstmt2.executeQuery();
+
+			int colSize = rsmd.getColumnCount();
+			for(int index = 1; index <= colSize; index++) {
+				System.out.print(rsmd.getColumnName(index) + " ");
+			}
+			System.out.println();
+			while(rs.next()) {
+				
+				for(int index = 1; index <= colSize; index++) {
+					String colType = rsmd.getColumnTypeName(index);
+					
+					if(colType.equals("DATE")) {
+						System.out.print(rs.getTimestamp(index) + " ");
+					}
+					else if(colType.equals("NUMBER")) {
+						System.out.print(rs.getBigDecimal(index) + " ");
+					}
+					else {
+						System.out.print(rs.getString(index) + " ");
+					}
+				}
+				System.out.println();
+			}
+			rs.close();
+			pstmt.close();
+			pstmt2.close();
+			
+		}catch(SQLException ex2) {
+			System.err.println("sql error = " + ex2.getMessage());
+			System.exit(1);
+		}
+	}
+	
+	public static void getHospitalList(Connection conn, Scanner sc) {
+		String[] param = {"location"};
+		Boolean[] paramValid = {false};
+		selectFunction(conn, sc, "name, location, treatment_subject", "hospital", "WHERE location LIKE ?||'%'", param, paramValid);
+	}
+	
+	public static void getHospitalInformation(Connection conn, Scanner sc) {
+		String[] param = {"hospital_id"};
+		Boolean[] paramValid = {true};
+		selectFunction(conn, sc, "name, location, phone_number, treatment_subject, consultation_hours, medical_equipment, check_covid19", "hospital", "WHERE hospital_id=?", param, paramValid);
+	}
+	
+	public static void getWard(Connection conn, Scanner sc) {
+		String[] param = {"hospital_id"};
+		Boolean[] paramValid = {true};
+		selectFunction(conn, sc, "time, price, ward_type, num_of_empty_bed", "ward", "WHERE hid=?", param, paramValid);
+	}
+	
+	public static void getDoctorInformation(Connection conn, Scanner sc) {
+		String[] param = {"hospital_id", "department_code"};
+		Boolean[] paramValid = {true, true};
+		selectFunction(conn, sc, "lname, fname, schedule, career, treatment_state, num_of_waiting", "doctor D, waiting_list W", "WHERE D.id_number=W.doctor_id_num and hid=? and department_code=?", param, paramValid);
+	}
+	
+	public static void getPatientInformation(Connection conn, Scanner sc) {
+		String[] param = {"id", "password"};
+		Boolean[] paramValid = {true, true};
+		selectFunction(conn, sc, "Lname, Fname, ssn, sex, birth_date, phone_num, address, weight, height", "patient", "WHERE id=? and password=?", param, paramValid);
 	}
 }
