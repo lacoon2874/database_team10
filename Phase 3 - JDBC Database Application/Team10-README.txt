@@ -1,3 +1,19 @@
+1. Phase3_query.java (Phase2 QUERY)
+홀수 QUERY
+
+
+짝수 QUERY
+- 2번 (Type1) : 성별이 O인 환자의 정보(ID, 이름, 성, 비밀번호, Ssn,  성별, 생년월일, 전화번호, 주소, 체중, 키) 조회   /  M 또는  F입력
+- 10번 (Type5) : 레코드가 존재하지 않는 환자 중 생일이 O월인 환자의 정보(ID, 이름, 성, 비밀번호, Ssn,  성별, 생년월일, 전화번호, 주소, 체중, 키) 조회   /   1~12 중에서 입력
+	*수정 : WHERE절에 환자의 생월(생일의 월) 조건 추가
+- 12번 (Type6) : 현재 대기 인원이 O명 이하인 의사들의 정보(의사ID번호, 성, 이름, 진료과목) 조회
+	*수정 : 조회할 컬럼을 수정(* -> ID_NUMBER, Lname, Fname, Treatment_subject)
+- 18번 (Type9) : 진료과목에 OO부서가 있는 병원의 빈 병실침대 수를 내림차순으로 조회   /   병원 부서명 입력 (ex.내과)
+	*수정 : WHERE절에 병원의 진료과목 조건 추가
+- 20번 (Type10) : OO과목을 진료하는 병원 중 OO지역에 위치한 병원 조회    /   병원 부서명, 병원 주소 입력 (ex.내과, 달서구)
+
+
+2. team10_dml.java (DML)
 INSERT
 - addPatient : 병원에 환자 정보 연결(환자 정보가 database에 없을 경우 추가 후 연결) / 병원에서 추가하므로 병원 id가 인자로 요구됨 / 입력을 통해 환자 정보 추가
 - addRecord : 환자의 치료 기록 추가 / 병원에서 추가하므로 병원 id와 대상 환자의 ssn이 인자로 요구됨 / 입력을 통해 치료 기록 추가
@@ -29,3 +45,23 @@ SELECT
 - getWard : ㅇㅇ병원의 병실들의 '변경시간, 가격, 병실 유형, 빈 침대 수' 정보 출력
 - getDoctorInformation : ㅇㅇ의사의 '성, 이름, 스케줄, 경력, 진료 상태, 대기 인원 수' 정보 출력
 - getPatientInformation : ㅇㅇ환자의 '성, 이름, 주민번호, 성별, 생년월일, 전화번호, 주소, 체중, 키' 정보 출력
+
+3. Phase2 SQL파일의 수정된 부분
+(1) Phase 2-1.sql
+CREATE HOSPITAL : Treatement_subject컬럼명을 Treatment_subject로 수정
+CREATE DEPARTMENT : Department_code의 data type을 VARCHAR(2)로 수정  /  Primary key를 (Hid,Department_code)로 수정
+CREATE DOCTOR : Department_code의 data type을 VARCHAR(2)로 수정
+ALTER DOCTOR : (Hid,Department_code)가 DEPARTMENT의 (Hid,Department_code)참조
+CREATE WAITING_LIST : Primary key를 (Doctor_id_num, Time)으로 수정
+CREATE WARD : Primary key를 (Hid, Ward_type)으로 수정
+
+(2) Phase 2-2.sql
+DEPARTMENT : Department_code를 2자리 숫자로 수정 (내과:01/외과:02/정형외과:03/소아청소년과:04/산부인과:05/이비인후과:06/안과:07/신경외과:08/영상의학과:09/재활의학과:10/마취통증의학과:11/치과:12)
+DOCTOR : Department_code를 2자리 숫자로 수정, Hid(병원 id)를 추가
+WARD : 중복된 (Hid,Ward_type)값 수정
+
+(3) Phase 2-3.sql
+- 5번 (Type2) : DEPARTMENT의 Primary key의 수정에 따라 WHERE절에 DP.Hid=DT.Hid 조건을 추가
+- 7번 (Type3) : DEPARTMENT의 Primary key의 수정에 따라 WHERE절에 DP.Hid=DT.Hid 조건을 추가
+- 14번 (Type7) : DEPARTMENT의 Primary key의 수정에 따라 WHERE절에 DP.Hid=DT.Hid 조건을 추가
+- 18번 (Type9) : SELECT절 집계함수를 SUM으로 수정
