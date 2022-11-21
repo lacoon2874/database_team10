@@ -142,16 +142,16 @@ public class team10_dml {
 				case 4:
 					System.out.print("병실가격을 변경할 병원 id : ");
 					String hospital_id4 = sc.nextLine();
-					System.out.print("가격을 변경할 병실 time : ");
-					String ward_time4 = sc.nextLine();
-					changeWardPrice(conn, sc, hospital_id4, ward_time4);
+					System.out.print("가격을 변경할 병실 type : ");
+					String ward_type4 = sc.nextLine();
+					changeWardPrice(conn, sc, hospital_id4, ward_type4);
 					break;
 				case 5:
 					System.out.print("남은 병실 수를 변경할 병원 id : ");
 					String hospital_id5 = sc.nextLine();
-					System.out.print("남은 수를 변경할 병실 time : ");
-					String ward_time5 = sc.nextLine();
-					changeWardEmptyBedNum(conn, sc, hospital_id5, ward_time5);
+					System.out.print("남은 수를 변경할 병실 type : ");
+					String ward_type5 = sc.nextLine();
+					changeWardEmptyBedNum(conn, sc, hospital_id5, ward_type5);
 					break;
 				case 6:
 					System.out.print("스케줄을 변경할 의사 id : ");
@@ -623,12 +623,12 @@ public class team10_dml {
 	
 	public static void removeWard(Connection conn, Scanner sc, String hospital_id) {
 		try {
-			String sql = "DELETE FROM ward WHERE hid=? and time=?";
-			System.out.print("삭제할 입원실 TIME : ");
-			String time = sc.nextLine();
+			String sql = "DELETE FROM ward WHERE hid=? and ward_type=?";
+			System.out.print("삭제할 입원실 Type : ");
+			String type = sc.nextLine();
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, hospital_id);
-			pstmt.setTimestamp(2, java.sql.Timestamp.valueOf(time));
+			pstmt.setString(2, type);
 			int res = pstmt.executeUpdate();
 			System.out.println(res + " row deleted.");
 			conn.commit();
@@ -776,15 +776,15 @@ public class team10_dml {
 		}
 	}
 	
-	public static void changeWardPrice(Connection conn, Scanner sc, String hospital_id, String time) {
+	public static void changeWardPrice(Connection conn, Scanner sc, String hospital_id, String type) {
 		try {
-			String sql = "UPDATE ward SET price=? WHERE hid=? and time=?";
+			String sql = "UPDATE ward SET price=? WHERE hid=? and ward_type=?";
 			System.out.print("변경할 입원실 가격 입력 : ");
 			String newPrice = sc.nextLine();
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, newPrice);
 			pstmt.setString(2, hospital_id);
-			pstmt.setTimestamp(3, java.sql.Timestamp.valueOf(time));
+			pstmt.setString(3, type);
 			int res = pstmt.executeUpdate();
 			System.out.println(res + " row updated.");
 			conn.commit();
@@ -797,15 +797,15 @@ public class team10_dml {
 		}
 	}
 	
-	public static void changeWardEmptyBedNum(Connection conn, Scanner sc, String hospital_id, String time) {
+	public static void changeWardEmptyBedNum(Connection conn, Scanner sc, String hospital_id, String type) {
 		try {
-			String sql = "UPDATE ward SET num_of_empty_bed=? WHERE hid=? and time=?";
+			String sql = "UPDATE ward SET num_of_empty_bed=? WHERE hid=? and ward_type=?";
 			System.out.print("남은 입원실 수 입력 : ");
 			String newEmptyBedNum = sc.nextLine();
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, newEmptyBedNum);
 			pstmt.setString(2, hospital_id);
-			pstmt.setTimestamp(3, java.sql.Timestamp.valueOf(time));
+			pstmt.setString(3, type);
 			int res = pstmt.executeUpdate();
 			System.out.println(res + " row updated.");
 			conn.commit();
