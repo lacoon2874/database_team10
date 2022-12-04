@@ -26,6 +26,7 @@
 %>
 <%
 	String hid = request.getParameter("hospital_id");
+	System.out.println(hid);
 	query = "SELECT name FROM hospital WHERE hospital_id=?";
 	pstmt = conn.prepareStatement(query);
 	pstmt.setString(1, hid);
@@ -34,7 +35,23 @@
 	out.println("<h1>" + rs.getString(1) + "</h1>");
 	rs.close();
 	pstmt.close();
+%>	
+	<form method="post" action="test.jsp">
+	
+<%
+	String uid = request.getParameter("user_id");
+	query = "SELECT lname, fname FROM patient WHERE id=?";
+	pstmt = conn.prepareStatement(query);
+	pstmt.setString(1, uid);
+	rs = pstmt.executeQuery();
+	rs.next();
+	String name = rs.getString(1)+rs.getString(2);
+	out.println(name + "님의 마이페이지" + "<input type=\"submit\" value=\"이동\">");
+	out.println("<input type=\"hidden\" name=\"user_id\" value=\"" + uid + "\">");
+	rs.close();
+	pstmt.close();
 %>
+	</form>
 	<h2>병원 정보</h2>
 <%
 	query = "SELECT location as 위치, phone_number as 전화번호, treatment_subject as 진료과목, consultation_hours as 진료시간, medical_equipment as 의료기기, check_covid19 as 코로나검사여부 FROM hospital WHERE hospital_id=?";
