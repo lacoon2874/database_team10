@@ -30,7 +30,7 @@
 		
 	  <h3> LOGIN <br></h3>
 		
-		ID: <input name= "userId" type="text" size="20"><br>
+		ID: <input name= "user_id" type="text" size="20"><br>
 		PASSWORD: <input name= "Password" type="text" size="20"><br><br>
 		   
 
@@ -59,34 +59,34 @@
       
       
       
-      <!--Áö¿ª ¼±ÅÃ + º´¿ø ¼±ÅÃ  -->
+      <!--ì§€ì—­ ì„ íƒ + ë³‘ì› ì„ íƒ  -->
 		<h3>REGION     -    HOSPITAL<br></h3>
 		
 		<select name="region" onChange="r_change(this.value,hospital_id)" >
 									
-									<option value="1">¼­¿ï
-									<option value="2">°æ±âµµ
-									<option value="3">°­¿øµµ
-									<option value="4">ÃæÃ»ºÏµµ
-									<option value="5">ÃæÃ»³²µµ
-									<option value="6">´ëÀü±¤¿ª½Ã
-									<option value="7">°æ»óºÏµµ
-									<option value="8">´ë±¸±¤¿ª½Ã
-									<option value="9">¿ï»ê±¤¿ª½Ã
-									<option value="10">°æ»ó³²µµ
-									<option value="11">ºÎ»ê±¤¿ª½Ã
-									<option value="12">Àü¶óºÏµµ
-									<option value="13">±¤ÁÖ±¤¿ª½Ã
-									<option value="14">Àü¶ó³²µµ
-									<option value="15">Á¦ÁÖµµ
+									<option value="1">ì„œìš¸
+									<option value="2">ê²½ê¸°ë„
+									<option value="3">ê°•ì›ë„
+									<option value="4">ì¶©ì²­ë¶ë„
+									<option value="5">ì¶©ì²­ë‚¨ë„
+									<option value="6">ëŒ€ì „ê´‘ì—­ì‹œ
+									<option value="7">ê²½ìƒë¶ë„
+									<option value="8">ëŒ€êµ¬ê´‘ì—­ì‹œ
+									<option value="9">ìš¸ì‚°ê´‘ì—­ì‹œ
+									<option value="10">ê²½ìƒë‚¨ë„
+									<option value="11">ë¶€ì‚°ê´‘ì—­ì‹œ
+									<option value="12">ì „ë¼ë¶ë„
+									<option value="13">ê´‘ì£¼ê´‘ì—­ì‹œ
+									<option value="14">ì „ë¼ë‚¨ë„
+									<option value="15">ì œì£¼ë„
 									
 		</select>
 		<select name="hospital_id">
-		   <option>-¼±ÅÃ-</option>
+		   <option>-ì„ íƒ-</option>
 		</select>
 		
 		
-		<br><br><br><input type="submit" name="submit" value="ÀÌµ¿" >
+		<br><br><br><input type="submit" name="submit" value="ì´ë™" >
 		
 		
 		<script language=javascript>
@@ -94,7 +94,7 @@
 		 
 		
 		 var r_num = new Array(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15);
-		 var r_name = new Array('¼­¿ï','°æ±âµµ','°­¿øµµ','ÃæÃ»ºÏµµ','ÃæÃ»³²µµ','´ëÀü±¤¿ª½Ã','°æ»óºÏµµ','´ë±¸±¤¿ª½Ã','¿ï»ê±¤¿ª½Ã','°æ»ó³²µµ','ºÎ»ê±¤¿ª½Ã','Àü¶óºÏµµ','±¤ÁÖ±¤¿ª½Ã','Àü¶ó³²µµ','Á¦ÁÖµµ');
+		 var r_name = new Array('ì„œìš¸','ê²½ê¸°ë„','ê°•ì›ë„','ì¶©ì²­ë¶ë„','ì¶©ì²­ë‚¨ë„','ëŒ€ì „ê´‘ì—­ì‹œ','ê²½ìƒë¶ë„','ëŒ€êµ¬ê´‘ì—­ì‹œ','ìš¸ì‚°ê´‘ì—­ì‹œ','ê²½ìƒë‚¨ë„','ë¶€ì‚°ê´‘ì—­ì‹œ','ì „ë¼ë¶ë„','ê´‘ì£¼ê´‘ì—­ì‹œ','ì „ë¼ë‚¨ë„','ì œì£¼ë„');
 		
 		
 		 var h_num = new Array();
@@ -102,7 +102,7 @@
 		
 		
 		 h_num[8] = new Array('abcd1234','hos1016','aefa4646','gra468','ragaar1463','agwe9564','bggds64','adfef7545','fea54586','cdh451','gb6avf','qwqw45641','fda4648','gregef648','htehwg654','gsae78','jkruy654','turk848','ktude8465','haaeh984');
-		 h_name[8] = new Array('Æ°Æ°¼Ó³»°úÀÇ¿ø','È­¿øÁ¤Çü¿Ü°úÀÇ¿ø','ÇöÇ³Á¦ÀÏ¿¬ÇÕÀÇ¿ø','ÀÌ¹ÌÁ¤»êºÎÀÎ°ú»ç¶ûÀÇ¿ø','ºÎ°­¿Ü°úÀÇ¿ø','ÁØÀÌºñÀÎÈÄ°úÀÇ¿ø','°æ´ë¿¬ÇÕ¾È°úÀÇ¿ø','Ã¤ÈäºÎ¿Ü°úÀÇ¿ø','°æ´ëº»Á¤Çü¿Ü°úÀÇ¿ø','ÆòÈ­½Å°æ¿Ü°úÀÇ¿ø','¾Æ¼¼¾Æ¿¬ÇÕÀÇ¿ø','°û¾Ø½Å¿¬ÇÕÀÌºñÀÎÈÄ°úÀÇ¿ø', 'º¸±¤º´¿ø','¸®´õ½ºÀçÈ°ÀÇÇÐº´¿ø','¿­¸°Å«º´¿ø','ÁöÇý·Î¿î¾Æµ¿º´¿ø','ÂüÁ¶Àºº´¿ø','¿©¼º¾ÆÀÌº´¿ø','°ûÄ¡°úº´¿ø',  'Åä¸¶½ºÄ¡°úÀÇ¿ø' );
+		 h_name[8] = new Array('íŠ¼íŠ¼ì†ë‚´ê³¼ì˜ì›','í™”ì›ì •í˜•ì™¸ê³¼ì˜ì›','í˜„í’ì œì¼ì—°í•©ì˜ì›','ì´ë¯¸ì •ì‚°ë¶€ì¸ê³¼ì‚¬ëž‘ì˜ì›','ë¶€ê°•ì™¸ê³¼ì˜ì›','ì¤€ì´ë¹„ì¸í›„ê³¼ì˜ì›','ê²½ëŒ€ì—°í•©ì•ˆê³¼ì˜ì›','ì±„í‰ë¶€ì™¸ê³¼ì˜ì›','ê²½ëŒ€ë³¸ì •í˜•ì™¸ê³¼ì˜ì›','í‰í™”ì‹ ê²½ì™¸ê³¼ì˜ì›','ì•„ì„¸ì•„ì—°í•©ì˜ì›','ê³½ì•¤ì‹ ì—°í•©ì´ë¹„ì¸í›„ê³¼ì˜ì›', 'ë³´ê´‘ë³‘ì›','ë¦¬ë”ìŠ¤ìž¬í™œì˜í•™ë³‘ì›','ì—´ë¦°í°ë³‘ì›','ì§€í˜œë¡œìš´ì•„ë™ë³‘ì›','ì°¸ì¡°ì€ë³‘ì›','ì—¬ì„±ì•„ì´ë³‘ì›','ê³½ì¹˜ê³¼ë³‘ì›',  'í† ë§ˆìŠ¤ì¹˜ê³¼ì˜ì›' );
 		
 		
 		 
@@ -114,7 +114,7 @@
 		
 		 for(i=sel.length-1; i>=0; i--)
 		  sel.options[i] = null;
-		 sel.options[0] = new Option('-¼±ÅÃ-','', '', 'true');
+		 sel.options[0] = new Option('-ì„ íƒ-','', '', 'true');
 		 for(i=0; i<name.length; i++){
 		  sel.options[i+1] = new Option(name[i],val[i]);
 		 }
