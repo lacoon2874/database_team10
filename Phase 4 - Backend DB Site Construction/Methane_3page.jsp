@@ -36,7 +36,7 @@
 	String query = null;
 	
 	request.setCharacterEncoding("utf-8");
-	String idInput=request.getParameter("user_id");		// pjs로 넣어서 구현해보기
+	String idInput=request.getParameter("user_id");
 	
 	/* Id -> Ssn */
 	query="SELECT Ssn FROM PATIENT WHERE id=?";
