@@ -69,7 +69,17 @@
 
 		out.println("<form action=\"Methane_3page.jsp\" method=\"post\">");
 		out.println("<input type=\"hidden\" name=\"user_id\" value=\""+ uid +"\">");
-		out.println("<button type=\"submit\">업데이트 완료</button></form>");		
+%>
+		<br><br><br><br><br>
+		<div class="row">
+			<div class="col text-center">
+				<button class="btn btn-primary" type="submit">업데이트 완료</button>
+			</div>
+		</div>
+	</form>
+	
+		
+<%		
 	}
 	else{
 %>	
