@@ -135,12 +135,16 @@
                     </div><br>
                     <div class="row">
 						<div class="col text-center">
-						<form action="Methane_4page.jsp" method="post">
-							<input type="hidden" name="user_id" value="<%=idInput%>">
-							<input type="hidden" name="pw" value="">
-							<button class="btn btn-primary" type="submit">비밀번호 변경</button>
-						</form>
+							<form action="Methane_4page.jsp" method="post">
+								<input type="hidden" name="user_id" value="<%=idInput%>">
+								<input type="hidden" name="pw" value="">
+								<button class="btn btn-primary" type="submit">비밀번호 변경</button>
+							</form>
 						</div>
+						<div class="col text-center">
+							<button class="btn btn-primary" onclick="location.href='Methane_0page.jsp'">로그아웃</button>
+						</div>
+						
 					</div>
                 </div>
             </div>
